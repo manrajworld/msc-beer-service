@@ -9,24 +9,24 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-//@RequiredArgsConstructor
-@RequestMapping("/api/v1/")
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/beer")
 @RestController
 public class BeerController {
 
-    @GetMapping("beer/{beerId}")
+    @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId){
 
         return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
     }
 
-    @PostMapping(path = "beer")
-    public ResponseEntity saveNewBeer(@RequestBody @Validated BeerDto beerDto){
+    @PostMapping()
+    public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto){
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping("beer/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody @Validated BeerDto beerDto){
+    @PutMapping("/{beerId}")
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto){
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
