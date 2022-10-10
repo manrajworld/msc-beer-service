@@ -1,6 +1,7 @@
 package guru.springframework.msscbeerservice.web.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.msscbeerservice.bootstrap.BeerLoader;
+import guru.springframework.msscbeerservice.services.BeerService;
 import guru.springframework.msscbeerservice.web.controller.BeerController;
 import guru.springframework.msscbeerservice.web.model.BeerDto;
 import guru.springframework.msscbeerservice.web.model.BeerStyleEnum;
@@ -29,10 +30,15 @@ public class BeerControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @MockBean
+    BeerService beerService;
+
     @Test
     void getBeerById() throws Exception {
 
-       // given(beerService.getById(any(), anyBoolean())).willReturn(getValidBeerDto());
+        //given(beerService.getById(any(), anyBoolean())).willReturn(getValidBeerDto());
+
+        given(beerService.getById(any())).willReturn(getValidBeerDto());
 
         mockMvc.perform(get("/api/v1/beer/" + UUID.randomUUID().toString()).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -45,7 +51,7 @@ public class BeerControllerTest {
         BeerDto beerDto = getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
-        //given(beerService.saveNewBeer(any())).willReturn(getValidBeerDto());
+        given(beerService.saveNewBeer(any())).willReturn(getValidBeerDto());
 
         mockMvc.perform(post("/api/v1/beer/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +61,7 @@ public class BeerControllerTest {
 
     @Test
     void updateBeerById() throws Exception {
-        //given(beerService.updateBeer(any(), any())).willReturn(getValidBeerDto());
+        given(beerService.updateBeer(any(), any())).willReturn(getValidBeerDto());
 
         BeerDto beerDto = getValidBeerDto();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
